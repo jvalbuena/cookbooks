@@ -1,0 +1,17 @@
+## NFS Mounts for a VMHost
+# Sets the file system attributes
+
+# check if the node has the correct attributes set
+if node[:vmclustercolour]
+  node[:nfsmounts]["/mnt/vmguest"] = { :remote_path =>
+    "#{node[:vmclustercolour_dns]}.file.nextgen.net:/pool0/#{node[:vmclustercolour]}/#{node[:hostname]}" }
+end
+
+if node[:vmclustercolour_f]
+  node[:nfsmounts]["/mnt/vmguest_f"] = { :remote_path =>
+    "#{node[:vmclustercolour_dns_f]}.file.nextgen.net:/pool0/#{node[:vmclustercolour_f]}/#{node[:hostname]}" }
+end
+
+if node[:vmclustercolour] || node[:vmclustercolour_f]
+  include_recipe "nfsmounts"
+end

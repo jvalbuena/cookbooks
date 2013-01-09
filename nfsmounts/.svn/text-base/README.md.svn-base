@@ -1,0 +1,35 @@
+# DESCRIPTION:
+
+Sets up NFS mount points.
+
+# REQUIREMENTS:
+
+# ATTRIBUTES: 
+
+    ## NFS Mounts
+    # like this
+    # node[:nfsmounts]["/path/to/mount"] = { :remote_path =>
+    # "host:/path/to/export"}
+    # can optionally add :options => "ro" to make it read-only - default
+    # is read-write
+    set_unless[:nfsmounts] = { }
+
+
+# USAGE:
+
+The mount point must be valid - the chef run will fail if it can't mount.
+
+example:
+
+    :nfsmounts => {
+    '/mnt/doc/primary' => {
+      :remote_path => 'doc.file.nextgen.net:/pool0/docservice_uat',
+      :options => 'rw,bg' # Read-write, background the mount process
+      # so it doesn't wait at boot.
+    #},
+    '/mnt/doc/failover' => {
+      :remote_path => 'doc_f.file.nextgen.net:/pool0/docservice_uat',
+      :options => 'rw,bg' # Read-write, background the mount process
+      # so it doesn't wait at boot.
+    }
+    }
